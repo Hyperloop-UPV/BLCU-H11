@@ -84,7 +84,7 @@ static inline constinit auto Operational_State_Machine = []() consteval
     sm.add_enter_action([]()
     {
         OrderPackets::Write_Program_flag = false;
-        BTFTP::on():
+        BTFTP::on();
         Actuators::send_to_boot(Comms::target_received);
     }, nested_flashing_state);
 
