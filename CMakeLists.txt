@@ -5,7 +5,7 @@ include(CTest)
 enable_testing()
 
 set(EXECUTABLE ${PROJECT_NAME}.elf)
-set(BOARD_NAME "TEST" CACHE STRING "Board key from Core/Inc/Code_generation/JSON_ADE/boards.json")
+set(BOARD_NAME "BLCU" CACHE STRING "Board key from Core/Inc/Code_generation/JSON_ADE/boards.json")
 if(BOARD_NAME STREQUAL "")
   message(FATAL_ERROR "BOARD_NAME cannot be empty")
 endif()
@@ -143,6 +143,9 @@ if(CMAKE_CROSSCOMPILING)
     ${SOURCE_HPP}
 
     $<$<BOOL:${CMAKE_CROSSCOMPILING}>:${STLIB_DIR}/startup_stm32h723zgtx.s>
+
+    # LwIP TFTP server (not included in ST-LIB by default)
+    $<$<BOOL:${USE_ETHERNET}>:${STLIB_DIR}/STM32CubeH7/Middlewares/Third_Party/LwIP/src/apps/tftp/tftp_server.c>
   )
 
   target_link_libraries(${EXECUTABLE} PRIVATE
