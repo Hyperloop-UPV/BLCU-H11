@@ -46,10 +46,6 @@ static constexpr auto operational_state = make_state(States_BLCU::Operational,
     Transition<States_BLCU>{States_BLCU::Fault,[]()
     {
         return (!OrderPackets::control_station_tcp->is_connected());
-    }},
-    Transition<States_BLCU>{States_BLCU::Fault,[]()
-    {
-        return OrderPackets::Reset_All_flag;
     }}
 );
 
