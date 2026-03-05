@@ -8,6 +8,8 @@ void BLCU::start(){
     Scheduler::register_task(10'000, [](){
         ProtectionManager::check_protections();
     });
+    BLCU_State_Machine.start();
+
 
     Scheduler::register_task(1'000, [](){
         BLCU_State_Machine.check_transitions();
