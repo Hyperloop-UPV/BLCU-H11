@@ -5,6 +5,7 @@
 #include "ErrorHandler/ErrorHandler.hpp"
 #include "BLCU/FDCBootloader/FDCBootloader.hpp"
 #include "ST-LIB.hpp"
+#include "HALAL/Services/Flash/Flash.hpp"
 
 
 #define TFTP_MAX_DATA_SIZE 					 ((uint16_t)512U)
@@ -15,7 +16,7 @@ class BTFTP{
 public:
 
 	struct btftp_file_t{
-		uint8_t* payload;
+		uint8_t payload[SECTOR_SIZE_IN_BYTES];
 		uint32_t pointer;
 		uint32_t max_pointer;
 	};
@@ -43,7 +44,7 @@ public:
 public:
 
 
-	static btftp_file_t* file;
+	static btftp_file_t file;
 
 	static void start();
 

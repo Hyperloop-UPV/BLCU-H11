@@ -21,7 +21,8 @@ void BLCU::start(){
 			CANIdentifier::CAN_29_BIT_IDENTIFIER,      
 			CANMode::CAN_MODE_NORMAL              
 		>(FDCAN::fdcan1);
-	FDCB::setup(fdcan);
+    FDCAN::start();
+	FDCB::set_up(fdcan);
 }
 
 void BLCU::update(){

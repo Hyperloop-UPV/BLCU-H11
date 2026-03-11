@@ -4,31 +4,30 @@
 #include "BLCU/BLCU.hpp"
 
 using ST_LIB::EthernetDomain;
-TIM_TypeDef* global_us_timer = nullptr;
 
 #if defined(USE_PHY_LAN8742)
 constexpr auto eth =
-    EthernetDomain::Ethernet(EthernetDomain::PINSET_H10, "05:80:e8:55:61:09",
-                             "192.168.1.5", "255.255.0.0");
+    EthernetDomain::Ethernet(EthernetDomain::PINSET_H10, "85:81:e8:67:61:69",
+                             "192.168.0.27", "255.255.0.0");
 #elif defined(USE_PHY_LAN8700)
 #if MASK_TO_24 == 1
 constexpr auto eth =
-    EthernetDomain::Ethernet(EthernetDomain::PINSET_H10, "05:80:e8:55:61:09",
-                             "192.168.1.5", "255.255.255.0");
+    EthernetDomain::Ethernet(EthernetDomain::PINSET_H10, "85:81:e8:67:61:69",
+                             "192.168.0.27", "255.255.255.0");
 #else
 constexpr auto eth =
-    EthernetDomain::Ethernet(EthernetDomain::PINSET_H10, "05:80:e8:55:61:09",
-                             "192.168.1.5", "255.255.0.0");
+    EthernetDomain::Ethernet(EthernetDomain::PINSET_H10, "85:81:e8:67:61:69",
+                             "192.168.0.27", "255.255.0.0");
 #endif
 #elif defined(USE_PHY_KSZ8041)
 #if MASK_TO_24 == 1
 constexpr auto eth =
-    EthernetDomain::Ethernet(EthernetDomain::PINSET_H11, "05:80:e8:55:61:09",
-                             "192.168.1.5", "255.255.255.0");
+    EthernetDomain::Ethernet(EthernetDomain::PINSET_H11, "85:81:e8:67:61:69",
+                             "192.168.0.27", "255.255.255.0");
 #else
 constexpr auto eth =
-    EthernetDomain::Ethernet(EthernetDomain::PINSET_H11, "05:80:e8:55:61:09",
-                             "192.168.1.5", "255.255.0.0");
+    EthernetDomain::Ethernet(EthernetDomain::PINSET_H11, "85:81:e8:67:61:69",
+                             "192.168.0.27", "255.255.0.0");
 #endif
 #else
 #error "Ethernet PHY not defined"

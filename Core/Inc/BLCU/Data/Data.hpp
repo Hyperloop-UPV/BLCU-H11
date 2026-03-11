@@ -3,7 +3,7 @@
 
 /*-------Flags-------*/
 #define BLCU_H10 1       // 0 = BLCU-H11, 1 = BLCU-H10
-#define MASK_TO_24 1 //0 = mask to 16 , 1 = mask to 24
+#define MASK_TO_24 0 //0 = mask to 16 , 1 = mask to 24
 
 
 using ST_LIB::DigitalInputDomain;

@@ -7,7 +7,8 @@ bool BTFTP::ready = false;
 
 BTFTP::Mode BTFTP::mode = BTFTP::Mode::NONE;
 
-BTFTP::btftp_file_t* BTFTP::file = nullptr;
+__attribute__((section(".ram_d1.buffer")))
+BTFTP::btftp_file_t BTFTP::file = {};
 
 //Public:
 void BTFTP::on(BTFTP::Mode mode){
@@ -29,12 +30,7 @@ void BTFTP::start(){
 		
 		return;
 	}
-	BTFTP::file = new BTFTP::btftp_file_t();
-	BTFTP::file->payload = (uint8_t*)malloc(SECTOR_SIZE_IN_BYTES);
-	if (BTFTP::file->payload == nullptr) {
-		ErrorHandler("BLCU could not allocate enough memory for tftp file buffer");
-		return;
-	}
+	memset(BTFTP::file.payload, 0, SECTOR_SIZE_IN_BYTES);
 	BTFTP::on(BTFTP::Mode::WRITE);
 
 }
@@ -69,9 +65,9 @@ void* BTFTP::open(const char* fname, const char* mode, u8_t write){
 
 	uint32_t address = FLASH_SECTOR0_START_ADDRESS;
 	BTFTP::BHandle* handle = new BTFTP::BHandle(string(fname), string(mode), write, address);
-	handle->file = BTFTP::file;
+	handle->file = &BTFTP::file;
 	handle->current_sector = 0;
-	BTFTP::file->max_pointer = SECTOR_SIZE_IN_BYTES - 1;
+	BTFTP::file.max_pointer = SECTOR_SIZE_IN_BYTES - 1;
 
 	if (handle->read_write == 1) {
 		handle->file->pointer = 0;
@@ -83,6 +79,9 @@ void* BTFTP::open(const char* fname, const char* mode, u8_t write){
 }
 
 void BTFTP::close(void* handle){
+	memset(BTFTP::file.payload, 0, SECTOR_SIZE_IN_BYTES);
+	BTFTP::file.pointer = 0;
+	BTFTP::file.max_pointer = SECTOR_SIZE_IN_BYTES - 1;
 	delete static_cast<BTFTP::BHandle*>(handle);
 	BLCU::finish_write_read_order(error_ok);
 }
